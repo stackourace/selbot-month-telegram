@@ -1,0 +1,20 @@
+[Unit]
+Description=Telegram account sender
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=telegram-sender
+WorkingDirectory=/opt/telegram-sender
+EnvironmentFile=/opt/telegram-sender/.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/telegram-sender/.venv/bin/python /opt/telegram-sender/main.py run
+Restart=on-failure
+RestartSec=60
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
